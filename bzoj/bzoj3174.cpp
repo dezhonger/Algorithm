@@ -48,9 +48,6 @@ int main() {
             cerr << "f[" << j+1 << "]:" << f[j+1] << endl;
         }
     }
-    //have sort
-    for (int i = 1; i <= n ; i++) {
-    }
     printf ("%d", h);
     return 0;
 }
