@@ -36,16 +36,29 @@ const double EPS = 1e-6;
 typedef long long LL;
 
 int main() {
-    int t, m, x, y;
-    cin >> t >> m;
-    int dp[100001];
-    CLR (dp, 0);
-    for (int i = 1; i <= m; i++) {
-        cin >> x >> y;
-        for (int j = x; j <= t; j++) {
-            dp[j] =max(dp[j], dp[j-x]+y);
+    int a[110];
+    int dp1[110];
+    int dp2[110];
+    int n;
+    cin >> n;
+    for (int i = 1; i <= n ; i++) cin >> a[i];
+    for (int i = 1; i <= n ; i++) {
+        dp1[i] = 1;
+        for (int j = 1; j < i; j++) {
+            if (a[j] < a[i]) dp1[i] = max (dp1[i], dp1[j] + 1);
+            if (a[j] > a[i]) dp2[i] = max (dp2[i], dp2[j] + 1);
         }
     }
-    cout << dp[t] << endl;
+    for (int i = n; i >= 1; i--) {
+        dp2[i] = 1;
+        for (int j = n; j > i; j--) {
+            if (a[j] < a[i]) dp2[i] = max (dp2[i], dp2[j] + 1);
+        }
+    }
+    int ma = -1;
+    for (int i = 1; i <= n ; i++) {
+        ma = max (ma, dp1[i] + dp2[i] - 1);
+    }
+    cout << n - ma << endl;
     return 0;
 }
