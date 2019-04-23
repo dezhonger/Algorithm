@@ -34,19 +34,42 @@ const int MOD = int (1e9) + 7;
 const double EPS = 1e-6;
 
 typedef long long LL;
-
+//f[i][j]表示前i个数字中第一行的数字为j的交换次数
+int a[1001], b[1001], f[1001][6001];
 int main() {
-    int a[1001], b[1001], f[1001];
     int n;
     cin >> n;
+    int sum = 0;
     for (int i = 1; i <= n ; i++) {
         cin >> a[i] >> b[i];
+        sum = sum + a[i] + b[i];
     }
-    f[0] = 0;
-    for (int i = 1; i <= n; i++) {
-        f[i] = min(abs(f[i - 1] + a[i] - b[i]), abs(f[i - 1] + b[i] - a[i]));
-        cout << i << ": " << f[i] << endl;
+    memset (f, 0x7F, sizeof (f));
+    f[1][a[1]] = 0;
+    f[1][b[1]] = 1;
+    for (int i = 2; i <= n; i++) {
+        for (int j = 6 * n; j >= 0; j--) {
+            if (j  - a[i] >= 0) f[i][j] = min (f[i][j], f[i - 1][j - a[i]]);
+            if (j  - b[i] >= 0) f[i][j] = min (f[i][j], f[i - 1][j - b[i]] + 1);
+        }
     }
-    cout << f[n] << endl;
+    int mi = 10000000;
+    int result = 2000;
+//    for (int j = 0; j <= 6 * n; j++) {
+//        cout << "j: " << j << endl;
+//        cout << f[n][j] << endl;
+//    }
+    for (int j = 0; j <= 6 * n; j++) {
+        if (f[n][j] <= n) {
+            int cur = abs (sum - j - j);
+            if (cur < mi) {
+                mi = cur;
+                result = f[n][j];
+            } else if (cur == mi) {
+                result = min (result, f[n][j]);
+            }
+        }
+    }
+    cout << result << endl;
     return 0;
 }
