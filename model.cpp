@@ -1,21 +1,33 @@
-#include <cmath>
-#include <stack>
-#include <algorithm>
-#include <string>
-#include <deque>
-#include <cstring>
-#include <cstdio>
 #include <vector>
-#include <set>
-#include <iostream>
+#include <list>
 #include <map>
+#include <set>
+#include <deque>
 #include <queue>
-#include <cstdlib>
+#include <stack>
+#include <bitset>
+#include <algorithm>
+#include <functional>
+#include <numeric>
+#include <utility>
+#include <sstream>
+#include <iostream>
 #include <iomanip>
+#include <cstdio>
+#include <cmath>
+#include <cstdlib>
+#include <cctype>
+#include <string>
+#include <cstring>
+#include <ctime>
+#include <cassert>
+#include <string.h>
+#include <unordered_set>
+#include <unordered_map>
 using namespace std;
 
-#define rep(i, a, b) for( i = (a); i <= (b); i++)
-#define reps(i, a, b) for( i = (a); i < (b); i++)
+#define rep(i, a, b) for(int i = (a); i <= (b); i++)
+#define reps(i, a, b) for(int i = (a); i < (b); i++)
 #define pb push_back
 #define ps push
 #define mp make_pair
