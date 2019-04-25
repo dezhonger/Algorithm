@@ -39,6 +39,12 @@ typedef long long LL;
 const int maxn = 300005;
 int i, n, x;
 LL a[maxn];
+
+
+//dp[i][0]: 以第i个数字结尾的都没乘x的最大值
+//dp[i][1]: 以第i个数字结尾的并且乘以x的最大值
+//dp[i][1]: 以第i个数字结尾的并且之前有个区间已经乘以x的最大值
+
 LL dp[maxn][3];
 
 int main() {
