@@ -1,53 +1,122 @@
-#include <vector>
-#include <list>
-#include <map>
-#include <set>
-#include <deque>
-#include <queue>
-#include <stack>
-#include <bitset>
-#include <algorithm>
-#include <functional>
-#include <numeric>
-#include <utility>
-#include <sstream>
-#include <iostream>
-#include <iomanip>
-#include <cstdio>
-#include <cmath>
-#include <cstdlib>
-#include <cctype>
-#include <string>
-#include <cstring>
-#include <ctime>
-#include <cassert>
-#include <string.h>
-#include <unordered_set>
-#include <unordered_map>
+#include <bits/stdc++.h>
 using namespace std;
 
-#define rep(i, a, b) for(int i = (a); i <= (b); i++)
-#define reps(i, a, b) for(int i = (a); i < (b); i++)
-#define pb push_back
-#define ps push
-#define mp make_pair
-#define CLR(x,t) memset(x,t,sizeof x)
-#define LEN(X) strlen(X)
-#define F first
-#define S second
 #define Debug(x) cout<<#x<<"="<<x<<endl;
 
+typedef pair<int, int> pii;
 
-const double euler_r = 0.57721566490153286060651209;
-const double pi = 3.141592653589793238462643383279;
-const double E = 2.7182818284590452353602874713526;
-const int inf = ~0U >> 1;
-const int MOD = int (1e9) + 7;
-const double EPS = 1e-6;
+class Indexer {
+private:
+    map<int, int> id;
+    vector<int> num;
 
-typedef long long LL;
+public:
+    int getId (int x) {
+        if (!id.count (x)) {
+            id[x] = num.size();
+            num.push_back (x);
+        }
+        return id[x];
+    }
+
+    int getNum (int id) {
+        return num[id];
+    }
+
+    int size() {
+        return id.size();
+    }
+};
+
+struct Edge {
+    int u, v;
+    bool avail;
+};
+
+class Graph {
+private:
+    int n;
+    vector<Edge> e;
+    vector<vector<int> > adj;
+
+    vector<int> pos;
+    list<int> path;
+
+    void dfs (list<int>::iterator it, int u) {
+        for (; pos[u] < adj[u].size(); ++pos[u]) {
+            int id = adj[u][pos[u]];
+            if (e[id].avail) {
+                e[id].avail = false;
+                int v = e[id].u + e[id].v - u;
+                dfs (path.insert (it, u), v);
+            }
+        }
+    }
+
+public:
+    Graph (int n) : n (n) {
+        adj.assign (n, vector<int>());
+    }
+
+    void addEdge (int u, int v) {
+        adj[u].push_back (e.size());
+        adj[v].push_back (e.size());
+        e.push_back ({u, v, false});
+    }
+
+    vector<int> eulerPath() {
+        for (Edge &p : e)
+            p.avail = true;
+        path.clear();
+        pos.assign (n, 0);
+        vector<int> odd;
+        for (int u = 0; u < n; ++u)
+            if (adj[u].size() % 2 == 1)
+                odd.push_back (u);
+        if (odd.empty()) {
+            odd.push_back (0);
+            odd.push_back (0);
+        }
+        if (odd.size() > 2)
+            return vector<int>();
+        dfs (path.begin(), odd[0]);
+        path.insert (path.begin(), odd[1]);
+        return vector<int> (path.begin(), path.end());
+    }
+};
 
 int main() {
+    int n;
+    scanf ("%d", &n);
+    vector<int> bprime (n - 1);
+    for (int i = 0; i < n - 1; ++i)
+        scanf ("%d", &bprime[i]);
+    vector<int> cprime (n - 1);
+    for (int i = 0; i < n - 1; ++i)
+        scanf ("%d", &cprime[i]);
+    Indexer ind;
+    for (int i = 0; i < n - 1; ++i) {
+        if (bprime[i] > cprime[i]) {
+            puts ("-1");
+            return 0;
+        }
+        bprime[i] = ind.getId (bprime[i]);
+        cprime[i] = ind.getId (cprime[i]);
+        Debug(bprime[i])
+        Debug(cprime[i])
 
+    }
+    int k = ind.size();
+    Graph g (k);
+    for (int i = 0; i < n - 1; ++i)
+        g.addEdge (bprime[i], cprime[i]);
+    vector<int> a = g.eulerPath();
+    if (a.size() < n)
+        puts ("-1");
+    else {
+        for (int i = 0; i < n; ++i)
+            printf ("%d ", ind.getNum (a[i]));
+        puts ("");
+    }
     return 0;
 }
