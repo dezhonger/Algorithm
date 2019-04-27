@@ -1,53 +1,40 @@
-#include <vector>
-#include <list>
-#include <map>
-#include <set>
-#include <deque>
-#include <queue>
-#include <stack>
-#include <bitset>
-#include <algorithm>
-#include <functional>
-#include <numeric>
-#include <utility>
-#include <sstream>
-#include <iostream>
-#include <iomanip>
-#include <cstdio>
-#include <cmath>
-#include <cstdlib>
-#include <cctype>
-#include <string>
-#include <cstring>
-#include <ctime>
-#include <cassert>
-#include <string.h>
-#include <unordered_set>
-#include <unordered_map>
+#include <bits/stdc++.h>
+
 using namespace std;
 
-#define rep(i, a, b) for(int i = (a); i <= (b); i++)
-#define reps(i, a, b) for(int i = (a); i < (b); i++)
-#define pb push_back
-#define ps push
-#define mp make_pair
-#define CLR(x,t) memset(x,t,sizeof x)
-#define LEN(X) strlen(X)
-#define F first
-#define S second
-#define Debug(x) cout<<#x<<"="<<x<<endl;
+const int MOD = 1000000007;
 
-
-const double euler_r = 0.57721566490153286060651209;
-const double pi = 3.141592653589793238462643383279;
-const double E = 2.7182818284590452353602874713526;
-const int inf = ~0U >> 1;
-const int MOD = int (1e9) + 7;
-const double EPS = 1e-6;
-
-typedef long long LL;
+void add(int &a, long long b) {
+    a = (a + b) % MOD;
+}
 
 int main() {
+    int n, k, m;
+    scanf("%d%d%d", &n, &k, &m);
 
-    return 0;
+    vector<vector<vector<int>>> dp(n+1, vector<vector<int>>(k+1, vector<int>(1<<m, 0)));
+    dp[0][0][0] = 1;
+
+    for(int i = 0; i < n; ++i) {
+        for(int j = 0; j <= k; ++j) {
+            for(int mask = 0; mask < (1<<m); ++mask) {
+                int newMask = (mask << 1) % (1<<m);
+
+                // Not visit planet i+1
+                add(dp[i+1][j][newMask], dp[i][j][mask]);
+
+                // Visit planet i+1
+                if (j < k) {
+                    int insertWays = __builtin_popcount(mask) + 1;
+                    add(dp[i+1][j+1][newMask|1], 1LL*insertWays*dp[i][j][mask]);
+                }
+            }
+        }
+    }
+
+    int ans = 0;
+    for(int mask = 0; mask < (1<<m); ++mask)
+        add(ans, dp[n][k][mask]);
+
+    printf("%d", ans);
 }
