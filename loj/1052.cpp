@@ -46,30 +46,22 @@ const double EPS = 1e-6;
 
 typedef long long LL;
 
-const int maxn = 105;
-int n, m, a[maxn][maxn], dp[maxn][maxn][maxn];
+int L, S, T, M;
+int a[105], f[105];
+//todo 做了一半，看错题目了，是不能踩到石子上
 
 int main() {
-    CLR (dp, 0x80);
-    cin >> n >> m;
-    rep (i, 1, n) rep (j, 1, m) cin >> a[i][j];
-    dp[2][1][1] = 0;
-    int s = n + m;
-    rep (i, 3, s - 1) rep (j, 1, n) rep (k, 1, n) {
-
-        if (j == k) continue;
-        int j1 = i - j;
-        int k1 = i - k;
-        if (j1 <= 0 || k1 <= 0 || j1 > m || k1 > m) continue;
-
-        dp[i][j][k] = max (dp[i][j][k], dp[i - 1][j - 1][k] + a[j][j1] + a[k][k1]);
-        dp[i][j][k] = max (dp[i][j][k], dp[i - 1][j][k - 1]+ a[j][j1] + a[k][k1]);
-        dp[i][j][k] = max (dp[i][j][k], dp[i - 1][j][k]+ a[j][j1] + a[k][k1]);
-        dp[i][j][k] = max (dp[i][j][k], dp[i - 1][j -1][k - 1]+ a[j][j1] + a[k][k1]);
-
+    cin >> L >> S >> T >> M;
+    rep(i, 1, M) cin >> a[i];
+    sort(a + 1, a + 1 + M);
+    CLR(f, 0x7f);
+    f[0] = 0;
+    for (int i = 1; i <= M; i++) {
+        for (int j = S; j <= T; j++) {
+            int pos = a[i];
+            f[i] = min(f[i], )
+        }
     }
 
-
-    cout << max (dp[s - 1][n - 1][n], dp[s - 1][n][n - 1]) << endl;
     return 0;
 }
