@@ -1,99 +1,72 @@
-#include <vector>
-#include <list>
-#include <map>
-#include <set>
-#include <deque>
-#include <queue>
-#include <stack>
-#include <bitset>
-#include <algorithm>
-#include <functional>
-#include <numeric>
-#include <utility>
-#include <sstream>
-#include <iostream>
-#include <iomanip>
-#include <cstdio>
-#include <cmath>
-#include <cstdlib>
-#include <cctype>
-#include <string>
-#include <cstring>
-#include <ctime>
-#include <cassert>
-#include <string.h>
-#include <unordered_set>
-#include <unordered_map>
+#include <bits/stdc++.h>
+
 using namespace std;
 
-#define rep(i, a, b) for(int i = (a); i <= (b); i++)
-#define reps(i, a, b) for(int i = (a); i < (b); i++)
-#define pb push_back
-#define ps push
-#define mp make_pair
-#define CLR(x,t) memset(x,t,sizeof x)
-#define LEN(X) strlen(X)
-#define F first
-#define S second
-#define Debug(x) cout<<#x<<"="<<x<<endl;
+const int AlphaSize = 26;
+const int MaxN = 1e5 + 100;
+const int MaxM = 256;
 
+int next_occur[MaxN][AlphaSize];
+//dp[i][j][k]表示第一个字符串的前i个字符，第二个字符串的前j个字符，第三个字符串的前k个用到的字符串的长度
+int dp[MaxM][MaxM][MaxM];
+string pattern;
+string words[3];
+int N, Q;
 
-const double euler_r = 0.57721566490153286060651209;
-const double pi = 3.141592653589793238462643383279;
-const double E = 2.7182818284590452353602874713526;
-const int inf = ~0U >> 1;
-const int MOD = int (1e9) + 7;
-const double EPS = 1e-6;
+void CreateLinks() {
+  for (int i = 0; i < AlphaSize; ++i) {
+    next_occur[N][i] = next_occur[N + 1][i] = N;
+  }
+  for (int pos = N - 1; pos >= 0; --pos) {
+    for (int i = 0; i < AlphaSize; ++i) {
+      next_occur[pos][i] = (pattern[pos] == 'a' + i ? pos : next_occur[pos + 1][i]);
+    }
+  }
+}
 
-typedef long long LL;
+void RecomputeDp(int a, int b, int c) {
+  int &val = dp[a][b][c];
+  val = N;
+  if (a) { val = min(val, next_occur[dp[a-1][b][c] + 1][words[0][a-1] - 'a']); }
+  if (b) { val = min(val, next_occur[dp[a][b-1][c] + 1][words[1][b-1] - 'a']); }
+  if (c) { val = min(val, next_occur[dp[a][b][c-1] + 1][words[2][c-1] - 'a']); }
+}
 
-int n, q;
-const int maxn = 100010;
-char s[maxn];
-int v[maxn];
-char a, c;
-int b;
-int cnt[26];
-vector<int> ve[4];
 int main() {
-    cin >> n >> q;
-    scanf ("%s", s);
-    for (int i = 0; i < n; i++) {
-        int x = s[i] - 'a';
-        cnt[x]++;
-    }
-    for (int i = 1; i <= q; i++) {
-        cin >> a;
-        if (a == '+') {
-            cin >> b >> c;
-            int st = -1;
-            if (!ve[b].empty()) {
-                st = ve[b].back();
-            }
-            int f = 0;
-//            cout << "st: " << st << endl;
-            for (int j = st + 1; j < n; j++) {
-                if (v[j] == 0 && s[j] == c) {
-                    ve[b].push_back (j);
-                    v[j] = b;
-                    cnt[c - 'a']--;
-                    cout  << "YES" << endl;
-                    f = 1;
-                    break;
-                }
-            }
-            if (!f) cout << "NO" << endl;
-        } else {
-            cin >> b;
-            if (ve[b].empty()) cout << "NO" << endl;
-            else {
-                int k = ve[b].back();
-                v[k] = 0;
-                cnt[s[k] - 'a']++;
-                ve[b].pop_back();
-                cout << "YES" << endl;
-            }
+  ios_base::sync_with_stdio(0);
+  cin.tie(0);
+
+  cin >> N >> Q >> pattern;
+  CreateLinks();
+
+  dp[0][0][0] = -1;
+
+  for (int i = 0; i < Q; ++i) {
+    char type;
+    int word_id;
+    cin >> type >> word_id;
+    --word_id;
+    if (type == '+') {
+      char ch;
+      cin >> ch;
+      words[word_id] += ch;
+      int max0 = words[0].size(), max1 = words[1].size(), max2 = words[2].size();
+      int min0 = word_id == 0 ? max0 : 0;
+      int min1 = word_id == 1 ? max1 : 0;
+      int min2 = word_id == 2 ? max2 : 0;
+
+      for (int a = min0; a <= max0; ++a) {
+        for (int b = min1; b <= max1; ++b) {
+          for (int c = min2; c <= max2; ++c) {
+            RecomputeDp(a, b, c);
+          }
         }
+      }
+    } else {
+      words[word_id].pop_back();
     }
-    return 0;
+
+    bool answer = dp[words[0].size()][words[1].size()][words[2].size()] < N;
+    cout << (answer ? "YES\n" : "NO\n");
+  }
 }
