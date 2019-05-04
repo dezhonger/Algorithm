@@ -45,9 +45,8 @@ void init() {
             if (check (j, i)) sum[j][i]++;
         }
 }
-void work() { //开始dp
+void work() {
     dp[0][0] = 0;
-//    for (int i = 1; i <= k; i++) dp[i][i] = dp[i - 1][i - 1] + sum[i][i];
     for (int i = 1; i <= m; i++) dp[i][1] = sum[1][i]; //初始化
     for (int i = 1; i <= m; i++)
         for (int j = 1; j <= k && j < i; j++)
