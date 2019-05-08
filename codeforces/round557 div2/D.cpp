@@ -9,7 +9,11 @@ using namespace std;
 #define pb push_back
 
 typedef long long ll;
+
+
 int n, m;
+
+
 ll chord(ll x, ll y) {
     //merge to a number
     x %= n;
@@ -44,7 +48,7 @@ int main() {
         if (n % i) continue;
         bool ok = true;
         for (auto &x : cs) {
-            if (us.count (rorate (x, i))) {
+            if (!us.count (rorate (x, i))) {
                 ok = false;
                 break;
             }
