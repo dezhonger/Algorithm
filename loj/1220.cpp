@@ -22,8 +22,6 @@
 #include <ctime>
 #include <cassert>
 #include <string.h>
-#include <unordered_set>
-#include <unordered_map>
 using namespace std;
 
 #define rep(i, a, b) for(int i = (a); i <= (b); i++)
@@ -63,6 +61,7 @@ int main() {
     rep (i, 1, n) cin >> pos[i] >> g[i];
     rep (i, 1, n) gsum[i] = gsum[i - 1] + g[i];
     CLR (f, 0x7f);
+    //区间dp f[i][j][0/1]表示关闭区间[i,j]的灯当前处于i或j的位置最少的功耗
     f[c][c][0] = f[c][c][1] = 0;
     for (int len = 2; len <= n ; len++) {
         for (int i = 1; i <= n; i++) {
