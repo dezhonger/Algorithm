@@ -55,7 +55,7 @@ int main() {
     reps (i, 0, n) {
         if (res.size() % 2 == 0 || res.back() != s[i]) res.push_back (s[i]);
     }
-    if (res.size() % 2 == 0) res.pop_back();
+    if (res.size() % 2 == 1) res.pop_back();
     cout << n - res.size() << endl << res << endl;
     return 0;
 }
