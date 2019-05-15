@@ -47,24 +47,8 @@ const double EPS = 1e-6;
 
 typedef long long LL;
 
-LL gcd(LL a, LL b) {
-    return b == 0 ? a : gcd(b, a % b);
-}
 
-int n, t;
-int d[310];
 int main() {
-    cin >> t;
-    while(t--) {
-        cin >> n;
-        rep(i, 1, n) cin >> d[i];
-        sort(d + 1, d + n + 1);
-        long r = 1;
-        rep(i, 1, n) {
-            r  = r * d[i] / gcd(r, d[i]);
-        }
-        if (r == d[n]) r *= d[1];
-        cout << r << endl;
-    }
+
     return 0;
 }
