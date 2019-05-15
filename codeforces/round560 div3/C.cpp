@@ -46,20 +46,16 @@ const int MOD = int (1e9) + 7;
 const double EPS = 1e-6;
 
 typedef long long LL;
-const int N = 330000;
 
-int a[N];
+int n, r;
+string s, res;
 
 int main() {
-	ios_base::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	int n; cin >> n;
-	for (int i = 1; i <= n; i++) cin >> a[i];
-	int ans = INT_MAX;
-	for (int i = 1; i <= n; i++) {
-		if (i > 1) ans = min(ans, a[i] / (i - 1));
-		if (i < n) ans = min(ans, a[i] / (n - i));
-	}
-	cout << ans << endl;
-	return 0;
+    cin >> n >> s;
+    reps (i, 0, n) {
+        if (res.size() % 2 == 0 || res.back() != s[i]) res.push_back (s[i]);
+    }
+    if (res.size() % 2 == 0) res.pop_back();
+    cout << n - res.size() << endl << res << endl;
+    return 0;
 }

@@ -46,20 +46,25 @@ const int MOD = int (1e9) + 7;
 const double EPS = 1e-6;
 
 typedef long long LL;
-const int N = 330000;
 
-int a[N];
+LL gcd(LL a, LL b) {
+    return b == 0 ? a : gcd(b, a % b);
+}
 
+int n, t;
+int d[310];
 int main() {
-	ios_base::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	int n; cin >> n;
-	for (int i = 1; i <= n; i++) cin >> a[i];
-	int ans = INT_MAX;
-	for (int i = 1; i <= n; i++) {
-		if (i > 1) ans = min(ans, a[i] / (i - 1));
-		if (i < n) ans = min(ans, a[i] / (n - i));
-	}
-	cout << ans << endl;
-	return 0;
+    cin >> t;
+    while(t--) {
+        cin >> n;
+        rep(i, 1, n) cin >> d[i];
+        sort(d + 1, d + n + 1);
+        long r = 1;
+        rep(i, 1, n) {
+            r  = r * d[i] / gcd(r, d[i]);
+        }
+        if (r == d[n]) r *= d[1];
+        cout << r << endl;
+    }
+    return 0;
 }
