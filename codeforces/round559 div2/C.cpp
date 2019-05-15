@@ -46,8 +46,25 @@ const int MOD = int (1e9) + 7;
 const double EPS = 1e-6;
 
 typedef long long LL;
+const int maxn = 100010;
+int n, m;
+int a[maxn], b[maxn];
 
 int main() {
+    cin >> n >> m;
+    rep (i, 1, n) cin >> a[i];
+    rep (i, 1, m) cin >> b[i];
+    sort (a + 1, a + 1 + n);
+    sort (b + 1, b + 1 + m);
+    if (b[1] < a[n])
+        cout << -1 << endl;
+    else {
 
+        long r = 0;
+        rep (i, 1, n) r = r + 1L * a[i] * m;
+        rep(i, 2, m) r += b[i] - a[n];
+        if (b[1] > a[n])r += (b[1] - a[n - 1]);
+        cout << r << endl;
+    }
     return 0;
 }
