@@ -47,7 +47,22 @@ const double EPS = 1e-6;
 
 typedef long long LL;
 
-int main() {
+int t, n;
+string s;
 
+int main() {
+    cin >> t;
+    while(t--) {
+        cin >> n >> s;
+        int index = -1;
+        for (int i = 0; i < n; i++) {
+            if (s[i] == '8') {
+                index = i;
+                break;
+            }
+        }
+        if (index == -1 || n - index  < 11) cout << "NO" << endl;
+        else cout << "YES" << endl;
+    }
     return 0;
 }

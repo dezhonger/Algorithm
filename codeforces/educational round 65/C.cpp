@@ -47,7 +47,40 @@ const double EPS = 1e-6;
 
 typedef long long LL;
 
-int main() {
+const int maxn = 500010;
+int s[maxn];
+int num[maxn];
 
+int findSet (int x) {
+    if (x == s[x]) return x;
+    else return s[x] = findSet (s[x]);
+}
+
+void unionSet (int x, int y) {
+    int fx = findSet (x);
+    int fy = findSet (y);
+    if (fx != fy) {
+        num[fy] += num[fx];
+        s[fx] = fy;
+    }
+}
+
+int n, m;
+
+int main() {
+    cin >> n >> m;
+    rep (i, 1, n) s[i] = i, num[i] = 1;
+    rep (i, 1, m) {
+        int x, y, z;
+        cin >> x;
+        if (x > 0) cin >> y;
+        for (int j = 1; j < x ; j++) {
+            cin >> z;
+            unionSet (y, z);
+        }
+    }
+    rep (i, 1, n) {
+        cout << num[findSet (i)] << " ";
+    }
     return 0;
 }
