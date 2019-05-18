@@ -22,8 +22,6 @@
 #include <ctime>
 #include <cassert>
 #include <string.h>
-#include <unordered_set>
-#include <unordered_map>
 using namespace std;
 
 #define rep(i, a, b) for(int i = (a); i <= (b); i++)
@@ -48,6 +46,7 @@ const double EPS = 1e-6;
 typedef long long LL;
 
 int main() {
-
+    ios::sync_with_stdio (false);
+    cin.tie (0);
     return 0;
 }
