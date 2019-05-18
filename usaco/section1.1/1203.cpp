@@ -95,7 +95,6 @@ int main() {
                 if(s[j] == tmp || s[j] == 'w') rc++;
                 else break;
             }
-             if (i == n + 1) cout << rc << endl;
             l[i] = max(l[i], lc);
             r[i] = max(r[i], rc);
         }
@@ -104,12 +103,9 @@ int main() {
     }
     int ans = 0;
     for(int i = 0; i < n; i++) {
-//        cout << i << " " << l[i] << " " << r[i] << endl;
 
         int tmp = r[i] + l[(i - 1 + n) % n];
-//        cout << i << " " << tmp << endl;
-        if (ans < tmp) ans = tmp;
-//        if (ans >= 77) cout << i << endl;
+        ans = max(ans, tmp);
 
     }
     cout << min(ans, n) << endl;
