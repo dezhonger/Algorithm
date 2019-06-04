@@ -50,7 +50,7 @@ typedef long long LL;
 //dist(x, y) = dist(x) + dist(y) - 2dist(lca(x, y))
 const int  SIZE = 50010;
 int f[SIZE][20], d[SIZE], dist[SIZE];
-int ver[2 * SIZE], Next[SIZE], edge[2 * SIZE], head[SIZE];
+int ver[2 * SIZE], Next[2 * SIZE], edge[2 * SIZE], head[SIZE];
 int T, n, m, tot, t;
 
 queue<int> q;
@@ -99,7 +99,7 @@ int main() {
         for (int i = 1; i <= n ; i++) head[i] = d[i] = 0;
         tot = 0;
 
-        for (int i = 1; i < n ; i++) {
+        for (int i = 1; i < n; i++) {
             int x, y, z;
             cin >> x >> y >> z;
             add (x, y, z);
@@ -112,7 +112,6 @@ int main() {
             int lcaNode = lca(x, y);
             cout << dist[x] + dist[y] - 2 * dist[lcaNode] << endl;
         }
-        cout << endl;
 
     }
 
