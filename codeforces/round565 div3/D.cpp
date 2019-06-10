@@ -47,7 +47,56 @@ const double EPS = 1e-6;
 
 typedef long long LL;
 
-int main() {
+const int maxn = 3000000;
+int n;
+int a[maxn];
+int id[maxn];
+bool used[maxn];
 
+//max divisor
+int fi (int x) {
+    for (int i = 2; i * i <= x; i++) if (x % i == 0) return x / i;
+}
+
+
+
+int main() {
+    ios::sync_with_stdio (false);
+    cin.tie (0);
+    vector<int> p;
+    vector<int> res;
+    for (int i = 2; i < maxn; i++) {
+        if (used[i]) continue;
+        p.push_back (i);
+        id[i] = p.size();
+        for (int j = i + i; j < maxn; j += i) {
+            used[j] = true;
+        }
+    }
+    cin >> n;
+    n <<= 1;
+    for (int i = 1; i <= n; i++) {
+        int x;
+        cin >> x;
+        a[x]++;
+    }
+    for (int i = maxn - 1; i >= 2; i--) {
+        while (a[i]) {
+            if (!used[i]) {
+                //i is prime
+                res.push_back (id[i]);
+                a[id[i]]--;
+            } else {
+                res.push_back (i);
+                a[fi (i)]--;
+            }
+            a[i]--;
+        }
+
+    }
+    for (int x : res) {
+        cout << x << " ";
+    }
+    cout << endl;
     return 0;
 }
