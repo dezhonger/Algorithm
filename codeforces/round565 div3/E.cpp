@@ -47,7 +47,50 @@ const double EPS = 1e-6;
 
 typedef long long LL;
 
-int main() {
+const int maxn = 200020;
+int n, m;
+int a[maxn];
+vector<int> v[maxn];
 
-    return 0;
+//black-white ranse
+void dfs (int x, int c) {
+    if (a[x] > 0) {
+        return ;
+    }
+    a[x] = c;
+    for (int y : v[x]) {
+        dfs (y, 3 - c);
+    }
+
+}
+
+void solve() {
+    cin >> n >> m;
+    rep (i, 1, n) v[i].clear(), a[i] = 0;
+    rep (i, 1, m) {
+        int x, y;
+        cin >> x >> y;
+        v[x].push_back (y);
+        v[y].push_back (x);
+    }
+    dfs (1, 1);
+    vector<int> A, B;
+    rep (i, 1, n) {
+        if (a[i] == 1) A.push_back (i);
+        else B.push_back (i);
+    }
+    if (B.size() < A.size()) A = B;
+    cout << A.size() << endl;
+    for (int x : A) {
+        cout << x << " ";
+    }
+    cout << endl;
+}
+
+int main() {
+    int T;
+    cin >> T;
+    while (T--) {
+        solve();
+    }
 }
