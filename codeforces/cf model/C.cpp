@@ -47,10 +47,11 @@ const double EPS = 1e-6;
 
 typedef long long LL;
 
-int n;
-int a[100010];
+
 
 int main() {
+	ios::sync_with_stdio (false);
+    cin.tie (0);
 
     return 0;
 }
