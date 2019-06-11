@@ -71,7 +71,7 @@ int main() {
 
     }
 
-    if (res > INF) {
+    if (res >= INF) {
         cout << "OVERFLOW!!!" << endl;
     } else {
         cout << res << endl;

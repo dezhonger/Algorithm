@@ -47,11 +47,17 @@ const double EPS = 1e-6;
 
 typedef long long LL;
 
-
+int n;
 
 int main() {
 	ios::sync_with_stdio (false);
     cin.tie (0);
+    cin >> n;
+    if (n % 2 != 0) cout << 0 << endl;
+    else {
+        int x = n / 2;
+        cout << (1ll << x) << endl;
 
+    }
     return 0;
 }
