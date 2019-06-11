@@ -45,8 +45,33 @@ const double EPS = 1e-6;
 
 typedef long long LL;
 
+const int N = 200010;
+int a[N];
+int n, k;
+
 int main() {
     ios::sync_with_stdio (false);
     cin.tie (0);
+    int T;
+    cin >> T;
+    while (T--){
+        cin >> n >> k;
+        for (int i = 1; i <= n; i++) cin >> a[i];
+        int res = -1;
+        int mi = 0x7f7f7f7f;
+        for (int i = 1; i <= n; i++) {
+            int j = i + k;
+            if (j > n) continue;
+            int mid = (a[i] + a[j]) / 2;
+            int dis = max(a[j] - mid, mid - a[i]);
+            if (dis < mi) {
+                mi = dis;
+                res = mid;
+            }
+        }
+        cout << res << endl;
+
+
+    }
     return 0;
 }
