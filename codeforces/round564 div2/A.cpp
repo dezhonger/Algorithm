@@ -52,14 +52,14 @@ int n;
 int x, y, z;
 
 int main() {
-	ios::sync_with_stdio (false);
+    ios::sync_with_stdio (false);
     cin.tie (0);
     cin >> x >> y >> z;
-    if ((x+z) > y && x > (y + z)) {
+    if ( (x + z) > y && x > (y + z)) {
         cout << "+" << endl;
-    } else if ((x+z) < y && x < (y + z)) {
+    } else if ( (x + z) < y && x < (y + z)) {
         cout << "-" << endl;
-    } else if ((x+z) == y && x == (y + z)) {
+    } else if ( (x + z) == y && x == (y + z)) {
         cout << "0" << endl;
     } else {
         cout << "?" << endl;
