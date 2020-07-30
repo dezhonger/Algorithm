@@ -1,0 +1,27 @@
+# depslib dependency file v1.0
+1586448689 source:e:\algorithm\alg\alg\main.cpp
+	<vector>
+	<list>
+	<map>
+	<set>
+	<deque>
+	<queue>
+	<stack>
+	<bitset>
+	<algorithm>
+	<functional>
+	<numeric>
+	<utility>
+	<sstream>
+	<iostream>
+	<iomanip>
+	<cstdio>
+	<cmath>
+	<cstdlib>
+	<cctype>
+	<string>
+	<cstring>
+	<ctime>
+	<cassert>
+	<string.h>
+
